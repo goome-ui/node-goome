@@ -299,6 +299,35 @@ Swapping skins and icons and drawing whole new widgets is in the <a href="https:
 </details>
 
 <details>
+<summary align="center"><b>🎞️ Animations 🎞️</b></summary>
+
+<br>
+
+<p align="center">
+<code>ui.anim(id, target, ms, ease)</code> gives you a number that slides toward <code>target</code>. Call it every frame with whatever the target is right now, goome keeps the state per id and keeps redrawing until its there (<code>ui.animating</code>). <code>ui.animColor</code> does the same for colors.<br>
+The ease can be a constant like <code>goome.EASE_SPRING</code> or just its name: <code>"smooth"</code>, <code>"linear"</code>, <code>"in"</code>, <code>"out"</code>, <code>"in out"</code>, <code>"back"</code>, <code>"spring"</code> or <code>"bounce"</code>. <code>goome.ease(kind, t)</code> gives you the raw curve.
+</p>
+
+```js
+const x = ui.anim("drawer", open ? 1 : 0, 300, "spring");
+const tint = ui.animColor("drawer tint", open ? 0xff6fdc5f : 0xff404858, 200, "linear");
+```
+</details>
+
+<details>
+<summary align="center"><b>🌍 Emoji, RTL, IME And Screen Readers 🌍</b></summary>
+
+<br>
+
+<p align="center">
+<code>goome.Font.system()</code> already pulls in the system emoji font. For your own fonts, <code>font.fallback(other)</code> adds one to try for missing chars. Closing a font thats still somebodys fallback is fine, it only really goes away once nothing uses it.<br>
+Hebrew and Arabic just work. <code>goome.textDir("rtl")</code> forces the direction for all text, <code>"auto"</code> (the default) goes by the first strong letter of each line.<br> <br>
+Inputs and text edits turn the IME on by themselves while focused and draw what youre composing at the caret. If you do your own text box, <code>g.textInput(true, caret)</code> starts it, then you get <code>TEXT</code> events with the finished text in <code>ev.msg</code> (the whole thing, not cut at 63 bytes) and <code>PREEDIT</code> ones while composing, with the caret in <code>ev.id</code>. From an engine you push them with <code>g.pushCommit("日本")</code> and <code>g.pushPreedit("にほ", 3)</code>.<br> <br>
+The ui kit builds an accessibility tree every frame and goome hands it to the screen reader in window mode. Its off in overlay and offscreen mode, <code>ui.a11y(true)</code> turns it on. <code>ui.a11yTree()</code> gives you an array of nodes with <code>roleName</code>, <code>label</code>, <code>value</code>, the box, <code>parent</code> as an index and <code>focused</code> / <code>checked</code> and friends, so an engine can bridge it to its own. For a <code>ui.custom</code> widget call <code>ui.a11yRole("button", "Knob")</code> and <code>ui.a11yValue("11")</code> right before it.
+</p>
+</details>
+
+<details>
 <summary align="center"><b>📚 The API 📚</b></summary>
 
 <br>
@@ -362,6 +391,9 @@ A grab stays good until you grab that monitor again. After that reading its pixe
 - `examples/ui_demo.js` - the ui kit demo with every widget, a theme editor and a stats window
 - `examples/app.js` - a small notes app in a normal window with menus, a split pane, a text editor, right click menus and a dialog
 - `examples/offscreen.js` - draws the ui with no window and saves it as a PNG
+- `examples/anim.js` - a ball that slides over with whatever ease you pick, plus the curve
+- `examples/text.js` - emoji, hebrew and arabic with a switch for the text direction. Give it a font file to add as a fallback
+- `examples/a11y.js` - prints the accessibility tree of a small settings window
 
 ```sh
 node examples/ui_demo.js
