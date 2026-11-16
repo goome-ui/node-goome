@@ -35,6 +35,10 @@ export declare function radius(r: number): [number, number, number, number];
 export declare function measure(text: string, size: number, font?: Font | null): number;
 export declare function lineHeight(size: number, font?: Font | null): number;
 export declare function setFont(index: number): void;
+export declare function textDir(dir: number | "auto" | "ltr" | "rtl"): void;
+export type Ease = number | "smooth" | "linear" | "out" | "in_out" | "in out" | "back" | "custom" | "in" | "spring" | "bounce";
+export declare function ease(kind: Ease, t: number): number;
+export declare const EASES: string[];
 export declare function fontCount(): number;
 export declare function pixelView(address: number, count: number): Uint32Array;
 
@@ -125,6 +129,8 @@ export declare class Font {
   measure(text: string, size: number): { w: number; h: number };
   width(text: string, size: number): number;
   lineHeight(size: number): number;
+  fallback(other: Font): this;
+  readonly fallbacks: Font[];
   close(): void;
   [Symbol.dispose](): void;
 }
@@ -240,6 +246,9 @@ export declare class Goome {
   readonly cursor: number;
   readonly clipboard: string;
   readonly dropPath: string | null;
+  readonly eventText: string;
+  readonly preeditCursor: number;
+  textInput(on?: boolean, caret?: RectLike | null): number;
   close(): void;
   [Symbol.dispose](): void;
   can(cap: number): boolean;
@@ -275,6 +284,8 @@ export declare class Goome {
   push(type: number | string, fields?: EventFields): void;
   pushText(text: string): void;
   pushClick(x: number, y: number, button?: number): void;
+  pushCommit(text: string): void;
+  pushPreedit(text: string, cursor?: number): void;
   lastFrame(): Image;
   hit(x: number, y: number): boolean;
   frameDirty(): Rect | null;
@@ -536,6 +547,35 @@ export declare class Ui {
   custom(id: string, w?: number, h?: number, flags?: number): Item;
   store(id: string, n: number): Float64Array;
   bind(action: number | string, combos: string | string[]): this;
+  anim(id: string, target: number, ms?: number, ease?: Ease): number;
+  animColor(id: string, target: number, ms?: number, ease?: Ease): number;
+  a11y(on?: boolean): void;
+  a11yRole(role: number | string, label?: string): void;
+  a11yValue(value: string): void;
+  a11yTree(): A11yNode[];
+}
+
+export interface A11yNode {
+  role: number;
+  roleName: string;
+  parent: number | null;
+  states: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  label: string;
+  value: string;
+  id: number;
+  num: number;
+  min: number;
+  max: number;
+  caret: number;
+  focused: boolean;
+  checked: boolean;
+  disabled: boolean;
+  expanded: boolean;
+  selected: boolean;
 }
 
 export interface AppOptions extends OpenOptions {
@@ -577,6 +617,7 @@ export declare class App {
 export declare const STYLE_NAMES: string[];
 export declare const ALIGN_NAMES: string[];
 export declare const EASE_NAMES: string[];
+export declare const ROLE_NAMES: string[];
 export declare const PRESET_NAMES: string[];
 export declare const ICON_NAMES: string[];
 export declare const SKIN_NAMES: string[];

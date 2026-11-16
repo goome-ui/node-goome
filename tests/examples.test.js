@@ -36,3 +36,12 @@ test("offscreen", () => {
   assert.strictEqual(fs.readFileSync(p).subarray(1, 4).toString(), "PNG");
   fs.rmSync(d, { recursive: true, force: true });
 });
+
+test("anim and text", () => {
+  run("anim.js", "screen 800x600 1; 2 click 60,90; end 12");
+  run("text.js", "screen 800x600 1; 2 click 100,100; 4 key hi; end 8");
+});
+
+test("a11y tree", () => {
+  assert.match(run("a11y.js", null), /button "Save"/);
+});

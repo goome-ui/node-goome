@@ -43,7 +43,7 @@ function tmpdir() {
   return fs.mkdtempSync(path.join(os.tmpdir(), "goome-"));
 }
 
-function runC(src, extra = []) {
+function runC(src, extra = [], args = []) {
   const cc = compiler();
   if (!cc) return null;
   const d = tmpdir();
@@ -55,7 +55,7 @@ function runC(src, extra = []) {
     }
     const exe = path.join(d, process.platform === "win32" ? "prog.exe" : "prog");
     execFileSync(cc, ["-std=c99", "-I" + path.join(ROOT, "native"), "-o", exe, file, ...extra], { stdio: ["ignore", "ignore", "inherit"] });
-    return execFileSync(exe).toString();
+    return execFileSync(exe, args).toString();
   } finally {
     fs.rmSync(d, { recursive: true, force: true });
   }
