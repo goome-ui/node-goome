@@ -1,0 +1,93 @@
+name: ci
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: deps
+        run: npm ci --ignore-scripts
+      - name: addon
+        run: npx node-gyp rebuild
+      - name: generated files are up to date
+        shell: bash
+        run: |
+          node tools/gen-api.js
+          git diff --exit-code src/api.c lib/consts.js lib/consts.d.ts
+      - name: tests
+        shell: bash
+        env:
+          GOOME_STRICT: 1
+          CC: ${{ runner.os == 'Windows' && 'gcc' || 'cc' }}
+        run: npm test
+      - name: hello on the test backend
+        shell: bash
+        env:
+          GOOME_BACKEND: test
+          GOOME_TEST_SCRIPT: 'screen 800x600 1; 2 click 100,100; 4 key hi; end 8'
+        run: node examples/hello.js
+      - name: types
+        run: npx tsc -p tests/types
+      - name: prebuild
+        shell: bash
+        run: |
+          npx prebuildify --napi --strip
+          ls -R prebuilds
+          rm -rf build
+          node -e "const g = require('.'); console.log(g.VERSION, g.openOffscreen(10, 10).backendName)"
+      - name: glibc 2.34
+        if: runner.os == 'Linux'
+        run: |
+          if objdump -T prebuilds/*/*.node | grep -E 'GLIBC_2\.(3[5-9]|[4-9][0-9])\b'; then echo "needs a newer glibc"; exit 1; fi
+      - name: pack
+        run: npm pack --dry-run
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prebuilds-${{ matrix.os }}
+          path: prebuilds/
+
+  node18:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: deps
+        run: npm ci --ignore-scripts
+      - name: addon
+        run: npx node-gyp rebuild
+      - name: tests
+        env:
+          GOOME_STRICT: 1
+        run: npm test
+
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: install from a packed tarball, builds the addon
+        run: |
+          npm pack
+          mkdir "$RUNNER_TEMP/app"
+          cd "$RUNNER_TEMP/app"
+          npm init -y >/dev/null
+          npm install "$GITHUB_WORKSPACE"/goome-*.tgz
+          node -e "const g = require('goome'); console.log(g.VERSION, g.parseCombo('alt+h'))"
