@@ -101,13 +101,20 @@ Overlay is still the default, nothing changes unless you ask for an app or offsc
 <br>
 
 ```sh
-npm install github:goome-ui/node-goome
+npm install https://github.com/goome-ui/node-goome/releases/download/v0.5.0/goome-0.5.0.tgz
 ```
 
 <p align="center">
-Theres no npm release yet, so it comes straight from this repo. Installing it builds the addon with node-gyp, which needs a C compiler and Python. That takes a few seconds and only happens once.<br> <br>
-On Debian/Ubuntu thats <code>sudo apt install build-essential python3</code>, on Mac <code>xcode-select --install</code>, on Windows the "Desktop development with C++" part of Visual Studio.<br> <br>
-The <code>prebuilds/</code> from CI already have the addon built for linux x64, windows x64 and both macs. Once the npm package is out those come with it and nobody has to compile anything.
+It isnt on npm, so it comes from the <a href="https://github.com/goome-ui/node-goome/releases">releases page</a>. That package already has the addon built for linux x64, windows x64 and both macs, so nobody has to compile anything. For another version swap <code>0.5.0</code> in both spots.<br> <br>
+Or straight from git, that builds the addon with node-gyp, which needs a C compiler and Python. It takes a few seconds and only happens once:
+</p>
+
+```sh
+npm install github:goome-ui/node-goome#v0.5.0
+```
+
+<p align="center">
+On Debian/Ubuntu thats <code>sudo apt install build-essential python3</code>, on Mac <code>xcode-select --install</code>, on Windows the "Desktop development with C++" part of Visual Studio.
 </p>
 
 <p align="center">
