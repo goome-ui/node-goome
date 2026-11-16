@@ -167,6 +167,13 @@ static napi_value ret_i(napi_env env, int i)
     return v;
 }
 
+static napi_value ret_u(napi_env env, uint32_t u)
+{
+    napi_value v;
+    napi_create_uint32(env, u, &v);
+    return v;
+}
+
 static napi_value ret_l(napi_env env, long l)
 {
     return ret_d(env, (double)l);

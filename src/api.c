@@ -345,6 +345,33 @@ static napi_value w_goome_drop_path(napi_env env, napi_callback_info info)
     return ret_s(env, r);
 }
 
+static napi_value w_goome_event_text(napi_env env, napi_callback_info info)
+{
+    napi_value a[1];
+    size_t n = 1;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    const char * r = goome_event_text((goome *)arg_p(env, a, n, 0));
+    return ret_s(env, r);
+}
+
+static napi_value w_goome_preedit_cursor(napi_env env, napi_callback_info info)
+{
+    napi_value a[1];
+    size_t n = 1;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    int r = goome_preedit_cursor((goome *)arg_p(env, a, n, 0));
+    return ret_i(env, r);
+}
+
+static napi_value w_goome_text_input(napi_env env, napi_callback_info info)
+{
+    napi_value a[3];
+    size_t n = 3;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    int r = goome_text_input((goome *)arg_p(env, a, n, 0), arg_i(env, a, n, 1), (const goome_rect *)arg_p(env, a, n, 2));
+    return ret_i(env, r);
+}
+
 static napi_value w_goome_push(napi_env env, napi_callback_info info)
 {
     napi_value a[2];
@@ -784,6 +811,24 @@ static napi_value w_goome_text_line_height(napi_env env, napi_callback_info info
     napi_get_cb_info(env, info, &n, a, NULL, NULL);
     double r = goome_text_line_height((goome_font *)arg_p(env, a, n, 0), arg_d(env, a, n, 1));
     return ret_d(env, r);
+}
+
+static napi_value w_goome_font_fallback(napi_env env, napi_callback_info info)
+{
+    napi_value a[2];
+    size_t n = 2;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    goome_font_fallback((goome_font *)arg_p(env, a, n, 0), (goome_font *)arg_p(env, a, n, 1));
+    return ret_undef(env);
+}
+
+static napi_value w_goome_text_dir(napi_env env, napi_callback_info info)
+{
+    napi_value a[1];
+    size_t n = 1;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    goome_text_dir(arg_i(env, a, n, 0));
+    return ret_undef(env);
 }
 
 static napi_value w_goome_ui_new(napi_env env, napi_callback_info info)
@@ -1691,6 +1736,37 @@ static napi_value w_goome_ui_size(napi_env env, napi_callback_info info)
     return ret_undef(env);
 }
 
+static napi_value w_goome_ease(napi_env env, napi_callback_info info)
+{
+    napi_value a[2];
+    size_t n = 2;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    double r = goome_ease(arg_i(env, a, n, 0), arg_d(env, a, n, 1));
+    return ret_d(env, r);
+}
+
+static napi_value w_goome_ui_anim(napi_env env, napi_callback_info info)
+{
+    napi_value a[5];
+    size_t n = 5;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    char *a1 = arg_s(env, a, n, 1);
+    double r = goome_ui_anim((goome_ui *)arg_p(env, a, n, 0), a1, arg_d(env, a, n, 2), arg_d(env, a, n, 3), arg_i(env, a, n, 4));
+    free(a1);
+    return ret_d(env, r);
+}
+
+static napi_value w_goome_ui_anim_color(napi_env env, napi_callback_info info)
+{
+    napi_value a[5];
+    size_t n = 5;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    char *a1 = arg_s(env, a, n, 1);
+    uint32_t r = goome_ui_anim_color((goome_ui *)arg_p(env, a, n, 0), a1, arg_u(env, a, n, 2), arg_d(env, a, n, 3), arg_i(env, a, n, 4));
+    free(a1);
+    return ret_u(env, r);
+}
+
 static napi_value w_goome_ui_push_color(napi_env env, napi_callback_info info)
 {
     napi_value a[3];
@@ -1850,6 +1926,46 @@ static napi_value w_goome_ui_bind(napi_env env, napi_callback_info info)
     return ret_i(env, r);
 }
 
+static napi_value w_goome_ui_a11y(napi_env env, napi_callback_info info)
+{
+    napi_value a[2];
+    size_t n = 2;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    goome_ui_a11y((goome_ui *)arg_p(env, a, n, 0), arg_i(env, a, n, 1));
+    return ret_undef(env);
+}
+
+static napi_value w_goome_ui_a11y_role(napi_env env, napi_callback_info info)
+{
+    napi_value a[3];
+    size_t n = 3;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    char *a2 = arg_s(env, a, n, 2);
+    goome_ui_a11y_role((goome_ui *)arg_p(env, a, n, 0), arg_i(env, a, n, 1), a2);
+    free(a2);
+    return ret_undef(env);
+}
+
+static napi_value w_goome_ui_a11y_value(napi_env env, napi_callback_info info)
+{
+    napi_value a[2];
+    size_t n = 2;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    char *a1 = arg_s(env, a, n, 1);
+    goome_ui_a11y_value((goome_ui *)arg_p(env, a, n, 0), a1);
+    free(a1);
+    return ret_undef(env);
+}
+
+static napi_value w_goome_a11y_tree(napi_env env, napi_callback_info info)
+{
+    napi_value a[3];
+    size_t n = 3;
+    napi_get_cb_info(env, info, &n, a, NULL, NULL);
+    int r = goome_a11y_tree((goome_ui *)arg_p(env, a, n, 0), (goome_a11y_node *)arg_p(env, a, n, 1), arg_i(env, a, n, 2));
+    return ret_i(env, r);
+}
+
 static const struct api_fn api_fns[] = {
     {"open", w_goome_open},
     {"open_app", w_goome_open_app},
@@ -1888,6 +2004,9 @@ static const struct api_fn api_fns[] = {
     {"clipboard_set", w_goome_clipboard_set},
     {"clipboard_get", w_goome_clipboard_get},
     {"drop_path", w_goome_drop_path},
+    {"event_text", w_goome_event_text},
+    {"preedit_cursor", w_goome_preedit_cursor},
+    {"text_input", w_goome_text_input},
     {"push", w_goome_push},
     {"resize", w_goome_resize},
     {"frame", w_goome_frame},
@@ -1935,6 +2054,8 @@ static const struct api_fn api_fns[] = {
     {"text", w_goome_text},
     {"text_measure", w_goome_text_measure},
     {"text_line_height", w_goome_text_line_height},
+    {"font_fallback", w_goome_font_fallback},
+    {"text_dir", w_goome_text_dir},
     {"ui_new", w_goome_ui_new},
     {"ui_free", w_goome_ui_free},
     {"ui_theme", w_goome_ui_theme},
@@ -2024,6 +2145,9 @@ static const struct api_fn api_fns[] = {
     {"ui_badge", w_goome_ui_badge},
     {"ui_pos", w_goome_ui_pos},
     {"ui_size", w_goome_ui_size},
+    {"ease", w_goome_ease},
+    {"ui_anim", w_goome_ui_anim},
+    {"ui_anim_color", w_goome_ui_anim_color},
     {"ui_push_color", w_goome_ui_push_color},
     {"ui_push_num", w_goome_ui_push_num},
     {"ui_push_radii", w_goome_ui_push_radii},
@@ -2041,4 +2165,8 @@ static const struct api_fn api_fns[] = {
     {"ui_cfg", w_goome_ui_cfg},
     {"ui_config_default", w_goome_ui_config_default},
     {"ui_bind", w_goome_ui_bind},
+    {"ui_a11y", w_goome_ui_a11y},
+    {"ui_a11y_role", w_goome_ui_a11y_role},
+    {"ui_a11y_value", w_goome_ui_a11y_value},
+    {"a11y_tree", w_goome_a11y_tree},
 };

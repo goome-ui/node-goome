@@ -74,8 +74,8 @@ for (const p of protos) {
   let s = `static napi_value w_${p.name}(napi_env env, napi_callback_info info)\n{\n    napi_value a[${cnt}];\n    size_t n = ${cnt};\n    napi_get_cb_info(env, info, &n, a, NULL, NULL);\n${body}`;
   if (rk === "v") s += `    ${call};\n${frees.map((f) => "    " + f + "\n").join("")}    return ret_undef(env);\n`;
   else {
-    const ct = { i: "int", d: "double", l: "long", s: "const char *", p: "void *", R: "goome_radii" }[rk];
-    const conv = { i: "ret_i", d: "ret_d", l: "ret_l", s: "ret_s", p: "ret_p", R: "ret_radii" }[rk];
+    const ct = { i: "int", u: "uint32_t", d: "double", l: "long", s: "const char *", p: "void *", R: "goome_radii" }[rk];
+    const conv = { i: "ret_i", u: "ret_u", d: "ret_d", l: "ret_l", s: "ret_s", p: "ret_p", R: "ret_radii" }[rk];
     s += `    ${ct} r = ${rk === "p" ? "(void *)" : ""}${call};\n${frees.map((f) => "    " + f + "\n").join("")}    return ${conv}(env, r);\n`;
   }
   s += "}\n\n";
