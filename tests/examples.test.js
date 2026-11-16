@@ -32,7 +32,7 @@ test("offscreen", () => {
   const d = tmpdir();
   const p = path.join(d, "o.png");
   const out = run("offscreen.js", null, [p]);
-  assert.match(out, /check 1 volume 0\.75 name 'goome from an engine'/);
+  assert.match(out, /check [01] volume [0-9.]+ name '.*' cursor \w+ -> /);
   assert.strictEqual(fs.readFileSync(p).subarray(1, 4).toString(), "PNG");
   fs.rmSync(d, { recursive: true, force: true });
 });

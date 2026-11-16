@@ -70,7 +70,7 @@ jobs:
       - name: deps
         run: npm ci --ignore-scripts
       - name: addon
-        run: npx node-gyp rebuild
+        run: npx -y node-gyp@11 rebuild
       - name: tests
         env:
           GOOME_STRICT: 1
