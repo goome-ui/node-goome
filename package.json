@@ -1,0 +1,55 @@
+{
+  "name": "goome",
+  "version": "0.5.0",
+  "description": "Overlays on top of everything, normal desktop apps and ui inside your game, from Node",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "license": "GPL-3.0-only",
+  "author": "sevvy-wevvy",
+  "homepage": "https://goome-ui.github.io/docs/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goome-ui/node-goome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/goome-ui/node-goome/issues"
+  },
+  "keywords": [
+    "overlay",
+    "gui",
+    "immediate-mode",
+    "ui",
+    "desktop",
+    "n-api",
+    "goome"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "gypfile": true,
+  "files": [
+    "lib/",
+    "src/",
+    "native/",
+    "prebuilds/",
+    "binding.gyp",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "install": "node-gyp-build",
+    "build": "node-gyp rebuild",
+    "prebuild": "prebuildify --napi --strip",
+    "test": "node --test",
+    "types": "tsc -p tests/types"
+  },
+  "dependencies": {
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.4.0",
+    "prebuildify": "^6.0.1",
+    "typescript": "^5.8.3"
+  }
+}

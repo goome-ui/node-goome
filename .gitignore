@@ -1,0 +1,7 @@
+node_modules/
+build/
+prebuilds/
+*.tgz
+*.node
+test-out/
+offscreen.png

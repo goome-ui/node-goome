@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "target": "es2022",
+    "module": "commonjs",
+    "lib": ["es2022", "esnext.disposable"],
+    "types": [],
+    "skipLibCheck": false
+  },
+  "files": ["check.ts"]
+}

@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  upload:
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: prebuilds-*
+          path: prebuilds/
+          merge-multiple: true
+      - name: pack
+        run: |
+          v=${TAG#v}
+          grep -q "\"version\": \"$v\"" package.json || { echo "package.json isnt $v"; exit 1; }
+          ls -R prebuilds
+          npm pack
+          test -s "goome-$v.tgz" || { echo "no goome-$v.tgz"; ls; exit 1; }
+      - name: upload
+        run: |
+          gh release view "$TAG" > /dev/null 2>&1 || gh release create "$TAG" --verify-tag --title "goome ${TAG#v}" --notes "goome ${TAG#v}"
+          gh release upload "$TAG" "goome-${TAG#v}.tgz" --clobber
