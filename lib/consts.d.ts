@@ -16,6 +16,7 @@ export declare const WINDOW_TRANSPARENT: number;
 export declare const WINDOW_ON_TOP: number;
 export declare const WINDOW_HIDDEN: number;
 export declare const WINDOW_CENTER: number;
+export declare const WINDOW_NO_TITLEBAR: number;
 export declare const OK: number;
 export declare const ENOTSUP: number;
 export declare const EDENIED: number;
