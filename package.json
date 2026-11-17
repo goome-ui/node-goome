@@ -1,6 +1,6 @@
 {
   "name": "goome",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Overlays on top of everything, normal desktop apps and ui inside your game, from Node",
   "main": "lib/index.js",
   "types": "index.d.ts",
