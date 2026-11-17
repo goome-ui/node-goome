@@ -101,7 +101,7 @@ Overlay is still the default, nothing changes unless you ask for an app or offsc
 <br>
 
 ```sh
-npm install https://github.com/goome-ui/node-goome/releases/download/v0.5.2/goome-0.5.2.tgz
+npm install https://github.com/goome-ui/node-goome/releases/download/v0.5.3/goome-0.5.3.tgz
 ```
 
 <p align="center">
@@ -110,7 +110,7 @@ Or straight from git, that builds the addon with node-gyp, which needs a C compi
 </p>
 
 ```sh
-npm install github:goome-ui/node-goome#v0.5.2
+npm install github:goome-ui/node-goome#v0.5.3
 ```
 
 <p align="center">
