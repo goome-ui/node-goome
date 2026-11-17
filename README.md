@@ -101,16 +101,16 @@ Overlay is still the default, nothing changes unless you ask for an app or offsc
 <br>
 
 ```sh
-npm install https://github.com/goome-ui/node-goome/releases/download/v0.5.0/goome-0.5.0.tgz
+npm install https://github.com/goome-ui/node-goome/releases/download/v0.5.2/goome-0.5.2.tgz
 ```
 
 <p align="center">
-It isnt on npm, so it comes from the <a href="https://github.com/goome-ui/node-goome/releases">releases page</a>. That package already has the addon built for linux x64, windows x64 and both macs, so nobody has to compile anything. For another version swap <code>0.5.0</code> in both spots.<br> <br>
+It isnt on npm, so it comes from the <a href="https://github.com/goome-ui/node-goome/releases">releases page</a>. That package already has the addon built for linux x64, windows x64 and both macs, so nobody has to compile anything. For another version swap <code>0.5.2</code> in both spots.<br> <br>
 Or straight from git, that builds the addon with node-gyp, which needs a C compiler and Python. It takes a few seconds and only happens once:
 </p>
 
 ```sh
-npm install github:goome-ui/node-goome#v0.5.0
+npm install github:goome-ui/node-goome#v0.5.2
 ```
 
 <p align="center">
