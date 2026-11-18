@@ -2,7 +2,7 @@
 
 <p align="center">
 Thanks for wanting to help! Small PRs that fix one thing are the easiest for me to check and merge, so keep them small and theyll get in way faster.<br>
-This repo is only the Node side. If the bug is in goome itself (drawing, a backend, the ui kit) it goes to <a href="https://github.com/goome-ui/c-goome">c-goome</a> instead, docs fixes go to <a href="https://github.com/goome-ui/docs">goome-ui/docs</a> (thats <a href="https://goome-ui.github.io/docs/">goome-ui.github.io/docs</a>) and new example projects to <a href="https://github.com/goome-ui/examples">goome-ui/examples</a>.
+This repo is only the Node side. If the bug is in goome itself (drawing, a backend, the ui kit) it goes to <a href="https://github.com/goome-ui/c-goome">c-goome</a> instead, docs fixes go to <a href="https://github.com/goome-ui/docs">goome-ui/docs</a> (thats <a href="https://goome.wtf/docs/">goome.wtf/docs</a>) and new example projects to <a href="https://github.com/goome-ui/examples">goome-ui/examples</a>.
 </p>
 
 <details>
@@ -91,7 +91,7 @@ CI runs on linux (plus Node 18), windows and both macs when you open the PR. It 
 • <code>src/api.c</code>, <code>lib/consts.js</code> and <code>lib/consts.d.ts</code> come from <code>tools/gen-api.js</code>, never edit them by hand. CI checks theyre up to date<br>
 • Every function in goome.h stays reachable. New struct fields go in <code>lib/layout.js</code> and <code>tests/layout.c</code>, new API in <code>index.d.ts</code> too<br>
 • Anything that holds native memory gets a <code>close()</code>, and closing twice is fine<br>
-• Anything with a begin and an end calls the end exactly when <a href="https://goome-ui.github.io/docs/ui-app/">the docs</a> say C wants it, also when the callback throws<br>
+• Anything with a begin and an end calls the end exactly when <a href="https://goome.wtf/docs/ui-app/">the docs</a> say C wants it, also when the callback throws<br>
 • Match the code around it. camelCase, short names are fine inside functions<br>
 • No comments unless something really isnt obvious<br>
 • Dont reformat whole files, it makes the diff impossible to read

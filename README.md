@@ -9,18 +9,18 @@
 </p>
 
 <p align="center">
-  <img src="https://goome-ui.github.io/docs/assets/badges/node-18.svg" alt="Node 18+">
-  <img src="https://goome-ui.github.io/docs/assets/badges/napi-prebuilt.svg" alt="N-API, prebuilt">
-  <img src="https://goome-ui.github.io/docs/assets/badges/typescript-types.svg" alt="TypeScript types included">
+  <img src="https://goome.wtf/badges/node-18.svg" alt="Node 18+">
+  <img src="https://goome.wtf/badges/napi-prebuilt.svg" alt="N-API, prebuilt">
+  <img src="https://goome.wtf/badges/typescript-types.svg" alt="TypeScript types included">
   <img src="https://img.shields.io/badge/Linux-X11%20%2B%20Wayland-1b1d22?style=flat-square&logo=linux&logoColor=white" alt="Linux">
   <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-1b1d22?style=flat-square&logo=windows11&logoColor=white" alt="Windows">
   <img src="https://img.shields.io/badge/macOS-14%2B-1b1d22?style=flat-square&logo=apple&logoColor=white" alt="macOS">
-  <img src="https://goome-ui.github.io/docs/assets/badges/license-gpl-3.svg" alt="GPL-3.0">
+  <img src="https://goome.wtf/badges/license-gpl-3.svg" alt="GPL-3.0">
 </p>
 
 <p align="center">
-  <a href="https://goome-ui.github.io/docs/">Docs</a> &nbsp;·&nbsp;
-  <a href="https://goome-ui.github.io/docs/builder/">Builder</a> &nbsp;·&nbsp;
+  <a href="https://goome.wtf/docs/">Docs</a> &nbsp;·&nbsp;
+  <a href="https://goome.wtf/builder/">Builder</a> &nbsp;·&nbsp;
   <a href="https://github.com/goome-ui/examples">Examples</a> &nbsp;·&nbsp;
   <a href="https://github.com/goome-ui/c-goome">C</a> &nbsp;·&nbsp;
   <a href="https://github.com/goome-ui/python-goome">Python</a> &nbsp;·&nbsp;
@@ -275,7 +275,7 @@ ui.canvas.circle(item.x + 24, item.y + 24, 20, item.held ? 0xff6fdc5f : 0xff8090
 
 <p align="center">
 <code>ui.config</code> has the timing and key binds (<code>ui.bind("copy", ["ctrl+c", "ctrl+insert"])</code>), and <code>ui.config.ease</code> takes your own easing function.<br>
-Swapping skins and icons and drawing whole new widgets is in the <a href="https://goome-ui.github.io/docs/">docs</a>.
+Swapping skins and icons and drawing whole new widgets is in the <a href="https://goome.wtf/docs/">docs</a>.
 </p>
 </details>
 
@@ -340,7 +340,7 @@ The ui kit builds an accessibility tree every frame and goome hands it to the sc
 <br>
 
 <p align="center">
-Everything from <a href="https://github.com/goome-ui/c-goome/blob/main/include/goome.h">goome.h</a> is in here, just camelCase. <a href="https://goome-ui.github.io/docs/">The docs</a> explain every part of it, the names there are the C ones. <code>index.d.ts</code> has the types.<br>
+Everything from <a href="https://github.com/goome-ui/c-goome/blob/main/include/goome.h">goome.h</a> is in here, just camelCase. <a href="https://goome.wtf/docs/">The docs</a> explain every part of it, the names there are the C ones. <code>index.d.ts</code> has the types.<br>
 Errors throw <code>goome.GoomeError</code> (or a subclass like <code>goome.Again</code> or <code>goome.NotSupported</code>) with the C error code on <code>.code</code>.
 </p>
 

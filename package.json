@@ -6,7 +6,7 @@
   "types": "index.d.ts",
   "license": "GPL-3.0-only",
   "author": "sevvy-wevvy",
-  "homepage": "https://goome-ui.github.io/docs/",
+  "homepage": "https://goome.wtf/docs/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/goome-ui/node-goome.git"
