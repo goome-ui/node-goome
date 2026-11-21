@@ -108,6 +108,10 @@ js += "});\n";
 fs.writeFileSync(path.join(root, "lib", "consts.js"), js);
 console.log(consts.length + " constants in lib/consts.js");
 
+const docs = JSON.parse(fs.readFileSync(path.join(root, "tools", "consts-docs.json"), "utf8"));
 let dts = "";
-for (const [k] of consts) dts += `export declare const ${k}: number;\n`;
+for (const [k] of consts) {
+  if (docs[k]) dts += `/** ${docs[k]} */\n`;
+  dts += `export declare const ${k}: number;\n`;
+}
 fs.writeFileSync(path.join(root, "lib", "consts.d.ts"), dts);
