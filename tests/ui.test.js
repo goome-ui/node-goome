@@ -256,6 +256,22 @@ test("callbacks always end what they began", () => {
   g.close();
 });
 
+test("number formats that would crash are refused", () => {
+  const g = goome.openOffscreen(200, 200);
+  const u = g.ui();
+  u.frame(0, () => u.window("w", { x: 0, y: 0, w: 180, h: 180 }, 0, () => {
+    for (const bad of ["%s", "%n", "%d", "%f %f", "%*f", "100%"]) {
+      assert.throws(() => u.slider("a", 0.5, 0, 1, bad), RangeError);
+      assert.throws(() => u.dragFloat("b", 0.5, 1, 0, 0, bad), RangeError);
+      assert.throws(() => u.number("c", 0.5, 1, bad), RangeError);
+    }
+    u.slider("a", 0.5, 0, 1, "%.0f%% done");
+    u.dragFloat("b", 0.5, 1, 0, 0, "%+08.3g px");
+    u.number("c", 0.5, 1, "plain");
+  }));
+  g.close();
+});
+
 test("app runs on the test backend", () => {
   const app = new goome.App({ title: "My app", width: 300, height: 200, backend: "test", testScript: "screen 1x1 1; 3 resize 700x500; 5 close; end 10" });
   let frames = 0, closed = 0;
