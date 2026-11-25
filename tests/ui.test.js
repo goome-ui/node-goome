@@ -2,6 +2,8 @@
 const test = require("node:test");
 const assert = require("node:assert");
 const { fnv, hex } = require("./util");
+const fs = require("fs");
+const path = require("path");
 const goome = require("..");
 
 const SCRIPT =
@@ -269,6 +271,33 @@ test("number formats that would crash are refused", () => {
     u.dragFloat("b", 0.5, 1, 0, 0, "%+08.3g px");
     u.number("c", 0.5, 1, "plain");
   }));
+  g.close();
+});
+
+test("a theme keeps its fonts alive", () => {
+  const ttf = fs.readFileSync(path.join(__dirname, "data", "dejavu-sub.ttf"));
+  const g = goome.openOffscreen(200, 200);
+  const u = g.ui();
+  const sys = u.theme.font;
+  if (sys) {
+    sys.close();
+    assert.ok(sys.closed);
+  }
+  const f = goome.Font.fromBytes(ttf), h = goome.Font.fromBytes(ttf);
+  u.theme.font = f;
+  u.theme.fontHeading = h;
+  const copy = u.theme.copy();
+  f.close();
+  h.close();
+  assert.ok(f.closed && f._f && h._f);
+  u.theme.fontHeading = null;
+  assert.ok(h._f);
+  copy.close();
+  assert.strictEqual(h._f, 0);
+  assert.ok(f._f);
+  u.frame(0, () => u.window("w", { x: 0, y: 0, w: 180, h: 180 }, 0, () => u.label("still drawn")));
+  u.close();
+  assert.strictEqual(f._f, 0);
   g.close();
 });
 
