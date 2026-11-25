@@ -125,7 +125,10 @@ test("frame copy, dirty and resize", () => {
   const p = 25 * 400 + 25;
   assert.deepStrictEqual([...rgba.subarray(p * 4, p * 4 + 4)], [255, 0, 0, 128]);
   assert.throws(() => g.frameCopy(new Uint8Array(10)), RangeError);
+  assert.throws(() => g.frameCopy(4096), TypeError);
   g.resize(100, 50, 1);
   assert.deepStrictEqual([g.monitors()[0].area.w, g.monitors()[0].area.h], [100, 50]);
+  assert.ok(!f.fresh);
+  assert.throws(() => f.pixels, goome.Gone);
   g.close();
 });
