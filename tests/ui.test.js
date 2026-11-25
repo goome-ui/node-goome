@@ -295,7 +295,15 @@ test("a theme keeps its fonts alive", () => {
   copy.close();
   assert.strictEqual(h._f, 0);
   assert.ok(f._f);
-  u.frame(0, () => u.window("w", { x: 0, y: 0, w: 180, h: 180 }, 0, () => u.label("still drawn")));
+  const p = goome.Font.fromBytes(ttf);
+  u.frame(0, () => u.window("w", { x: 0, y: 0, w: 180, h: 180 }, 0, () => {
+    u.pushFont(p);
+    p.close();
+    assert.ok(p._f);
+    u.label("still drawn");
+    u.pop();
+  }));
+  assert.strictEqual(p._f, 0);
   u.close();
   assert.strictEqual(f._f, 0);
   g.close();
